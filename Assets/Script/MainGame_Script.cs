@@ -7,17 +7,18 @@ public class MainGame_Script : MonoBehaviour {
     public int beatDelay = 3;
     public int BPM = 100;
     public float timeToUpdateBeat;
+    public float approachRate = 5;
 
     public float beatTimer = 0;
 	// Use this for initialization
 	void Start () {
-	    timeToUpdateBeat = (60 / (float)BPM);
     }
 	
 	// Update is called once per frame
 	void Update () {
 	    if(Application.isPlaying == true)
         {
+            timeToUpdateBeat = (60 / (float)BPM);
             UpdateBeat();
         }
 	}
@@ -28,7 +29,7 @@ public class MainGame_Script : MonoBehaviour {
         if (beatTimer >= timeToUpdateBeat)
         {
             beatNumber++;
-            beatTimer -= 1;
+            beatTimer -= timeToUpdateBeat;
         }
     }
 }
