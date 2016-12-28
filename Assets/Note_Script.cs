@@ -8,7 +8,8 @@ public class Note_Script : MonoBehaviour {
     private GameObject MainGame;
     public enum Notes { Circle, Cross, Square, Triangle };
     public Notes noteTypes;
-    public int Beat = 0;
+    public int beat = 0;
+    public MainGame_Script mainGame_Script;
 
 
     public Sprite CircleSprite;
@@ -23,6 +24,7 @@ public class Note_Script : MonoBehaviour {
 	void Start () {
         MainGame = GameObject.Find("MainGame");
         transform.SetParent(MainGame.transform.FindChild("BeatMap"));
+        mainGame_Script = MainGame.GetComponent<MainGame_Script>();
         NoteSprite = GetComponent<SpriteRenderer>(); //Set SpriteRenderer
         lastSprite = noteTypes;
         UpdateSprite();
@@ -30,12 +32,24 @@ public class Note_Script : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        IsNoteActive();
         if (noteTypes != lastSprite)
         {
             lastSprite = noteTypes;
             UpdateSprite();
         }
 	}
+    void IsNoteActive()
+    {
+        if (mainGame_Script.beatNumber < (beat - mainGame_Script.beatDelay) || mainGame_Script.beatNumber > beat)
+        {
+            NoteSprite.enabled = false;
+        }
+        else
+        {
+            NoteSprite.enabled = true;
+        }
+    }
 
     void UpdateSprite()
     {
